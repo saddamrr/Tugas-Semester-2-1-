@@ -23,15 +23,16 @@ class petugascontroller extends Controller
         }
         return response()->json(compact('token'));
     }
+
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'nama_petugas' => 'required|string|max:255',
             'alamat' => 'required|string|max:255',
             'notelp' => 'required|string|max:255',
-            'level' => 'required',
             'username' => 'required|string|max:255|unique:petugas',
             'password' => 'required|string|min:5|confirmed',
+            'level' => 'required',
         ]);
 
         if($validator->fails()){
@@ -48,6 +49,49 @@ class petugascontroller extends Controller
         $token = JWTAuth::fromUser($user);
         return response()->json(compact('user','token'),201);
     }
+
+    public function update($id_petugas, Request $request)
+    {
+        $validator=Validator::make($request->all(),
+        [
+            'nama_petugas'=>'required',
+            'alamat'=>'required',
+            'notelp'=>'required',
+            'username'=>'required',
+            'password'=>'required',
+        ]  
+    );
+    if($validator->fails()){
+        return Response()->json($validator->errors());
+    }
+    $ubah=User::where('id_petugas',$id_petugas)->update([
+        'nama_petugas'=>$request->nama_petugas,
+        'alamat'=>$request->alamat,
+        'notelp'=>$request->notelp,
+        'username'=>$request->username,
+        'password'=>$request->password,
+    ]);
+    if($ubah){
+        $data['message'] = 'Petugas berhasil diubah!!!';
+        return response()->json($data);
+    } else {
+        $data['message'] = 'Petugas gagal diubah!!!';
+        return response()->json($data);
+    }
+    }
+
+    public function destroy($id_petugas)
+    {
+        $hapus=User::where('id_petugas',$id_petugas)->delete();
+        if($hapus){
+            $data['message'] = 'Data berhasil dihapus!';
+            return response()->json($data);
+        } else {
+            $data['message'] = 'Data gagal dihapus!';
+            return response()->json($data);
+        }
+    }
+
     public function getAuthenticatedUser()
     {
         try {

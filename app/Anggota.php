@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Anggota extends Model
 {
     protected $table="anggota";
-    protected $primatyKey="id";
+    protected $fillable=[
+        'nama_anggota','alamat','notelp'
+    ];
 }
