@@ -32,3 +32,11 @@ Route::post('/anggota', 'anggotacontroller@store');
 Route::put('/anggota/{id_anggota}', 'anggotacontroller@update');
 Route::delete('/anggota/{id_anggota}', 'anggotacontroller@destroy');
 
+Route::post('/peminjaman', 'peminjamancontroller@store');
+Route::delete('/peminjaman/{id_peminjaman}', 'peminjamancontroller@destroy');
+Route::put('/peminjaman/{id_peminjaman}', 'peminjamancontroller@update');
+Route::get('/peminjaman/{id_peminjaman}', 'peminjamancontroller@show');
+
+Route::post('/detail_buku', 'controllerdetail@store');
+Route::delete('/detail_buku/{id_detail}', 'controllerdetail@destroy');
+Route::put('/detail_buku/{id_detail}', 'controllerdetail@update');
